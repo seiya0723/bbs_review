@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>簡易掲示板</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'bbs/css/index.css' %}">
+
+</head>
+<body>
+
+    <main class="container">
+        {# ここが投稿用フォーム #}
+        <form method="POST">
+            {% csrf_token %}
+
+
+            <input id="star_radio_1" type="radio" name="star" value="1">
+            <input id="star_radio_2" type="radio" name="star" value="2">
+            <input id="star_radio_3" type="radio" name="star" value="3">
+            <input id="star_radio_4" type="radio" name="star" value="4">
+            <input id="star_radio_5" type="radio" name="star" value="5">
+
+            <div class="star_radio_label_area">
+                <div class="star_radio_label_flex">
+                    <label class="star_radio_label" for="star_radio_5"><div class="true_star" ><i class="fas fa-star"></i></div><div class="false_star"><i class="far fa-star"></i></div></label>
+                    <label class="star_radio_label" for="star_radio_4"><div class="true_star" ><i class="fas fa-star"></i></div><div class="false_star"><i class="far fa-star"></i></div></label>
+                    <label class="star_radio_label" for="star_radio_3"><div class="true_star" ><i class="fas fa-star"></i></div><div class="false_star"><i class="far fa-star"></i></div></label>
+                    <label class="star_radio_label" for="star_radio_2"><div class="true_star" ><i class="fas fa-star"></i></div><div class="false_star"><i class="far fa-star"></i></div></label>
+                    <label class="star_radio_label" for="star_radio_1"><div class="true_star" ><i class="fas fa-star"></i></div><div class="false_star"><i class="far fa-star"></i></div></label>
+                </div>
+            </div>
+            <textarea class="form-control" name="comment"></textarea>
+            <input type="submit" value="送信">
+        </form>
+
+        {# ここが投稿されたデータの表示領域 #}
+        {% for review in reviews %}
+        <div class="border">
+            <div>{{ review.comment }}</div>
+            <div class="review_star">
+                <span class="review_true_star">{% for s in review.star_icon.true_star %}<i class="fas fa-star"></i>{% endfor %}</span>
+                <span class="review_false_star">{% for s in review.star_icon.false_star %}<i class="far fa-star"></i>{% endfor %}</span>
+            </div>
+        </div>
+        {% endfor %}
+
+    </main>
+</body>
+</html>
